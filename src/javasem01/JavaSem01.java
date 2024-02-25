@@ -80,6 +80,7 @@ public class JavaSem01 {
 				System.out.println(Arrays.toString(mas));
 				System.out.println("Avg: " + getMean(mas));
 				System.out.println("Min: " + getMin(mas));
+				System.out.println("Max: " + getMax(mas));
 				System.out.println(Arrays.toString(arraySort(mas)));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -108,18 +109,31 @@ public class JavaSem01 {
 		}
 		static double getMin(double[] array) throws Exception{
 			if (array == null) throw new Exception("Wrong input parametrs");
-			double temp = 100;
-			for (int i = 0; i < array.length; i++) {
-				if (array[i]> temp) {
-					temp = array[i];
+			
+			double min = array[0];
+			
+			for (double temp: array) {
+				if ( temp < min) {
+					min = temp;
 				}
 			}
 			
-			return temp;
+			
+			return min;
 		}
 		static double getMax(double[] array) throws Exception{
 			if (array == null) throw new Exception("Wrong input parametrs");
-			return 0;
+			
+			double max = array[0];
+			
+			for (double temp: array) {
+				if ( temp > max) {
+					max = temp;
+				}
+			}
+			
+			
+			return max;
 		}
 		static double[] arraySort(double[] array) throws Exception{
 			if (array == null) throw new Exception("Wrong input parametrs");
@@ -132,20 +146,23 @@ public class JavaSem01 {
 		public static void main(String[] arguments) {
 			
 			try {
-				System.out.println(generateMatrix(5));
+				double[][] matrix = generateMatrix(5);
+				System.out.println(Arrays.deepToString(matrix));
+				System.out.println(getProduct(matrix,2,3));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		static double[][] generateMatrix(int N) throws Exception{
-			if (N <= 0 ) throw new Exception("Wrong input parametrs");
+			if(N <= 0) throw new Exception("Wrong input parameter");
 			
-			double [][] result = new double[N][N];
+			
+			double[][] result = new double[N][N];
 			Random rand = new Random();
 			
-			for (int i = 0; i < result.length; i++) {
-				for (int j = 0; j < result[i].length; j++) {
+			for(int i = 0; i < result.length; i++) {//rows
+				for(int j = 0; j < result[i].length;j++) {//columns
 					result[i][j] = rand.nextDouble();
 				}
 			}
@@ -157,34 +174,69 @@ public class JavaSem01 {
 			if (matrix == null) throw new Exception("Wrong input parametrs");
 			
 			
-			return j;
+			double sum = 0;
+		    for (int k = 0; k < matrix[i-1].length; k++) {
+		        sum += matrix[i-1][k] * matrix[k][j-1];
+		    }
+		    return sum;
 		}
 	}
 	
 	class Seminar_1_PART5 {
 		public static void main(String[] arguments) {
 			try {
-				System.out.println(coinFlip(5));
+				System.out.println(Arrays.toString(coinFlip(10000)));
+				System.out.println(Arrays.toString(rollDice(10000)));
+				System.out.println("Tries: " + roll2Dices());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		static int[] coinFlip(int N) throws Exception {
+		static double[] coinFlip(int N) throws Exception {
 			if (N <= 0 ) throw new Exception("Wrong input parametrs");
 			
-			int[] result = new int[N];
+			double[] result = new double[3];
 			
 			Random rand = new Random();
-			for (int i = 1; i <= N; i++) {
+			for(int i = 1; i <= N; i++) {
 				boolean isHead = rand.nextBoolean();
-				if (isHead) result[0] = result[0] + 1;
+				if(isHead) result[0] = result[0] + 1;
 				else result[1] = result[1] + 1;
 			}
+			
 			result[2] = result[0]/result[1];
 			
 			return result;
 			
 		}
+		static int[] rollDice(int N) throws Exception {
+			if (N <= 0 ) throw new Exception("Wrong input parametrs");
+			
+			Random rand = new Random();
+			int[] histogram = new int[6];
+			
+			for (int i = 0; i < N; i++) {
+				int roll = rand.nextInt(6)+1;
+				histogram[roll - 1]++;
+			}
+			return histogram;
+		}
+		
+		static int roll2Dices() {
+			int tries = 0;
+			
+			Random rand = new Random();
+			while (true) {
+				tries++;
+				int dice1 = rand.nextInt(6)+1;
+				int dice2 = rand.nextInt(6)+1;
+				if (dice1 == 6 && dice2 ==6) {
+					break;
+				}
+			}
+			return tries;
+		}
+		
 	}
 }
