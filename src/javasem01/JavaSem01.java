@@ -239,4 +239,60 @@ public class JavaSem01 {
 		}
 		
 	}
+	
+	class Seminar_1_PART6 {
+		public static void main(String[] arguments) {
+			
+			try {
+				int level = 7;
+				int[] triangle = pascalsTriangle(level);
+				System.out.println(Arrays.toString(triangle));
+				
+				for (int i = 0; i < triangle.length;i++) {
+					System.out.print(triangle[i] + " ");
+					if (i == 0 || i == 2 || i == 5 || i == 9 || i == 14 || i == 20) {
+						System.out.println();
+						
+						
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		static int[] pascalsTriangle(int level) throws Exception {
+			if (level <= 0 ) throw new Exception("Wrong input parametrs");
+			int[] result = new int[level * (level + 1) / 2];
+			for (int i = 0; i < level; i++) {
+				for (int j = 0; j <= i; j++) {
+					result[index(i,j)] =(int) binomialCoefficient(i, j);
+				}
+			}
+			return result;
+		}
+		static long binomialCoefficient(int n, int r) {
+		    return factorial(n) / (factorial(r) * factorial(n - r));
+		} 
+		static int index(int row, int col) {
+	        return row * (row + 1) / 2 + col;
+	    }
+		
+		static long factorial(int N) {
+			long f = 1;
+			if (N < 0) {
+				System.out.println(0);
+			}else {
+				for (int i = 1; i <= N; i++) {
+					f = f * i;
+				}
+			}
+			return f;
+			
+		}
+
+	}
+		
+		
 }
